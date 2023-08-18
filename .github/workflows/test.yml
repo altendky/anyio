@@ -51,7 +51,9 @@ jobs:
     - name: Install dependencies
       run: pip install -e .[test]
     - name: Test with pytest
-      run: coverage run -m pytest -v
+      run: |
+        coverage run -m pytest -v
+        coverage xml
       timeout-minutes: 5
       env:
         PYTEST_DISABLE_PLUGIN_AUTOLOAD: 1
@@ -59,6 +61,7 @@ jobs:
       uses: coverallsapp/github-action@v2
       with:
         parallel: true
+        file: coverage.xml
 
   coveralls:
     name: Finish Coveralls
